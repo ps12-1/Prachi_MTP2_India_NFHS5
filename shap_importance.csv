@@ -1,0 +1,46 @@
+feature,mean_abs_shap
+Height-for-age z-score,0.29635180521287274
+State: Meghalaya,0.022389985064693807
+Child age (months),0.020389750288653655
+State: Nagaland,0.01898279367290103
+State: Gujarat,0.016786992732994152
+State: Assam,0.012365999359979184
+Wealth quintile (1–5),0.008435752049628646
+State: Uttar Pradesh,0.008078292724178988
+State: Webengal,0.00744908091135113
+State: Rajasthan,0.007359953503655399
+State: Odisha,0.005978608668247701
+State: Maharashtra,0.00575599181213356
+State: Karnataka,0.005741188243226004
+State: Arunachal Pradesh,0.004496009283983831
+State: Manipur,0.004120446138012719
+State: Haryana,0.0038311848065903566
+Weight-for-age z-score,0.0034454935470889098
+Mother's age (years),0.003317105957562764
+State: Telangana,0.002290722300793685
+Sex (female=1),0.0022662631666975725
+State: Jammu And Kashmir,0.0015845348557113406
+State: Punjab,0.0015754128022218664
+State: Himachal Pradesh,0.0011917894425990502
+State: Madhya Pradesh,0.0011724892090718305
+State: Tripura,0.001144093625563084
+Mother's education (ordinal),0.0008715780986435618
+State: Uttarakhand,0.0008534508680144044
+State: Bihar,0.0007026388848659704
+State: Andhra Pradesh,0.0005332074030484083
+State: Kerala,0.0005307393158466737
+Urban area,0.0004979257284800093
+State: Jharkhand,0.00036241478645905075
+State: Puducherry,0.00019806984411603292
+State: Tamil Nadu,0.00018392540580228388
+State: Ladakh,9.917769330233177e-05
+State: Sikkim,5.379648780878662e-06
+Mother: secondary+ education,0.0
+State: Mizoram,0.0
+State: Lakshadweep,0.0
+State: Dadra And Nagar Haveli And Daman And Diu,0.0
+State: Nct Of Delhi,0.0
+State: Chhattisgarh,0.0
+Any anganwadi benefit received,0.0
+State: Chandigarh,0.0
+State: Goa,0.0
