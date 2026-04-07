@@ -67,12 +67,17 @@ base_features = [
     "is_female",           # sex (female=1)
     "is_urban",            # urban area
     "wealth_index",        # 1–5 wealth quintile
-    "HAZ",                 # height-for-age z-score (stunting)
-    "WAZ",                 # weight-for-age z-score (underweight)
+    # HAZ and WAZ deliberately excluded: HAZ > -2 is a direct component of the
+    # outcome (ecdi_proxy_physical), so including it would create a circular
+    # predictor that partially determines the label it is trying to predict.
+    # WAZ is also excluded for the same reason (highly correlated with HAZ and
+    # partially overlapping with the physical domain definition).
     "mother_edu",          # mother's education (0–5 ordinal)
     "mother_higher_ed",    # mother: complete secondary or higher
     "mother_age",          # mother's age in years
-    "anganwadi_any",       # received any anganwadi benefit
+    # anganwadi_any excluded: it equals 1 for all children in the analysis
+    # sample (s562 is non-null only when s558='yes'), so it is a constant
+    # feature with zero predictive variance.
 ]
 
 state_dummies = [c for c in df.columns if c.startswith("st_")]

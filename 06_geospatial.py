@@ -168,10 +168,13 @@ y_vec = np.array([state_rate_dict[s] for s in states_in_adj])
 y_mean = y_vec.mean()
 y_dev  = y_vec - y_mean
 
-# Moran's I
+# Moran's I (standard formula using row-standardised W)
+# With row-standardised W, S₀ = n (each row sums to 1, n rows),
+# so n/S₀ = 1 and the formula simplifies to:
+#   I = (Σᵢ Σⱼ w*ᵢⱼ·zᵢ·zⱼ) / (Σᵢ zᵢ²)   where w*ᵢⱼ = row-standardised weight
 numerator   = (y_dev @ W_std @ y_dev)
 denominator = (y_dev @ y_dev)
-I = (n / W.sum()) * (numerator / denominator)
+I = numerator / denominator   # n/S₀ = 1 for row-standardised W
 
 # Permutation test
 np.random.seed(42)
@@ -180,8 +183,7 @@ I_perm = []
 for _ in range(n_perm):
     y_perm = np.random.permutation(y_vec)
     y_perm_dev = y_perm - y_perm.mean()
-    I_perm.append((n / W.sum()) *
-                  (y_perm_dev @ W_std @ y_perm_dev) / (y_perm_dev @ y_perm_dev))
+    I_perm.append((y_perm_dev @ W_std @ y_perm_dev) / (y_perm_dev @ y_perm_dev))
 p_value = (np.sum(np.array(I_perm) >= I) + 1) / (n_perm + 1)
 
 print(f"\nMoran's I Spatial Autocorrelation")

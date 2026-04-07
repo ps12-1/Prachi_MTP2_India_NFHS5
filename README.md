@@ -40,18 +40,20 @@ full ECDI2030 framework.
 ### Supervised ML Performance (5-fold CV)
 | Model | ROC-AUC | F1 |
 |---|---|---|
-| Logistic Regression | **0.784 ± 0.003** | 0.556 ± 0.002 |
-| HistGradientBoosting | **0.849 ± 0.002** | 0.603 ± 0.003 |
+| Logistic Regression | **0.656 ± 0.003** | 0.438 ± 0.003 |
+| HistGradientBoosting | **0.656 ± 0.004** | 0.434 ± 0.004 |
+
+Note: HAZ/WAZ excluded from feature set — HAZ > −2 is a direct component of the outcome (physical proxy domain), so inclusion would create circular prediction. The AUC of ~0.656 reflects honest predictive power of socioeconomic context variables alone.
 
 ### Top 5 SHAP Predictors (HistGradientBoosting)
-1. **Height-for-age z-score (HAZ)** — strongest predictor (directly in composite)
-2. State: Meghalaya (very low ECCE attendance)
-3. Child age (months)
-4. State: Nagaland (near-zero anganwadi attendance in sample)
-5. State: Gujarat (high anganwadi attendance)
+1. **Child age (months)** — older children more likely to be on track
+2. **State: Meghalaya** — very low ECCE attendance
+3. **State: Nagaland** — near-zero anganwadi attendance
+4. **Mother's education (ordinal)** — strong protective factor
+5. **State: Uttar Pradesh** — large state with low rates
 
 ### Geospatial Analysis (State-Level)
-- **Moran's I = 0.1045**, p = 0.001 (999 permutations) — significant spatial clustering
+- **Moran's I = 0.421**, p = 0.001 (999 permutations) — significant spatial clustering
 - **Highest on-track states**: Andaman & Nicobar Islands (47%), West Bengal (43%), Odisha (42%), Gujarat (40%)
 - **Lowest on-track states**: Nagaland (0.3%), Manipur (4.9%), Meghalaya (8.5%)
   - *Note: Very low values in Northeast states reflect near-zero anganwadi attendance in this sample,
@@ -107,9 +109,9 @@ nutritional status are largely independent in India.
 | Framework | ECDI2030 (direct items) | ECDI2030 proxy (2 domains) |
 | Sample size | 2,799 (complete ECDI) | 86,999 (proxy composite) |
 | On-track rate | 12.6% | 25.0% |
-| HGB AUC | 0.663 | 0.849 |
-| Top predictor | Child age (SHAP) | HAZ z-score (SHAP) |
-| Spatial clustering | Moran's I=0.098, p=0.166 | Moran's I=0.105, p=0.001 |
+| HGB AUC | 0.663 | 0.656 |
+| Top predictor | Child age (SHAP) | Child age / state (SHAP) |
+| Spatial clustering | Moran's I=0.098, p=0.166 | Moran's I=0.421, p=0.001 |
 | Administrative unit | Province (7) | State (36) |
 
 ---
