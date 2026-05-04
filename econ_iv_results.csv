@@ -1,0 +1,3 @@
+estimator,learning_β,se,p,first_stage_F,F_note
+OLS (clustered),0.11227480805598206,0.020171162188469247,2.6049621359327907e-08,,—
+"IV 2SLS (LOO, clustered)",0.7908657985725438,0.1432267663378241,3.355944486152903e-08,11943.37,"Kleibergen-Paap approx (state-clustered SEs, LOO instrument)"

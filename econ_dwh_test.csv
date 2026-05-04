@@ -1,0 +1,7 @@
+stat,value
+dwh_coef,-0.7460011232984247
+dwh_se,0.14269540704551542
+dwh_t,-5.2279266638236885
+dwh_p,1.714214744856554e-07
+instrument,LOO state mean
+se_type,state-clustered

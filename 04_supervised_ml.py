@@ -179,17 +179,33 @@ hgb_final = HistGradientBoostingClassifier(
 )
 hgb_final.fit(X_imp, y)
 
-# ── 9. SHAP — subsample 500 rows for speed ────────────────────────────────────
+# ── 9. SHAP — full dataset via TreeExplainer ─────────────────────────────────
 
-print("\nComputing SHAP values (n=500 subsample) …")
-rng = np.random.default_rng(42)
-idx = rng.choice(len(X_imp), size=min(500, len(X_imp)), replace=False)
-X_shap = X_imp.iloc[idx].reset_index(drop=True)
+print(f"\nComputing SHAP values (full dataset, n={len(X_imp):,}) via TreeExplainer …")
+X_shap = X_imp.copy()
 
-masker   = shap.maskers.Independent(X_shap, max_samples=50)
-explainer = shap.PermutationExplainer(hgb_final.predict_proba, masker)
-sv_raw   = explainer(X_shap)
-sv       = sv_raw[..., 1]   # class-1 (on-track) SHAP values
+tree_explainer = shap.TreeExplainer(hgb_final)
+shap_vals = tree_explainer.shap_values(X_shap)
+
+# sklearn's HGB returns a single (n, p) array for binary classification
+# (positive-class SHAP values); some SHAP versions return a list of two.
+if isinstance(shap_vals, list) and len(shap_vals) == 2:
+    shap_arr = shap_vals[1]
+    base_val = (tree_explainer.expected_value[1]
+                if hasattr(tree_explainer.expected_value, "__len__")
+                else tree_explainer.expected_value)
+else:
+    shap_arr = np.array(shap_vals)
+    base_val = (tree_explainer.expected_value[-1]
+                if hasattr(tree_explainer.expected_value, "__len__")
+                else float(tree_explainer.expected_value))
+
+sv = shap.Explanation(
+    values=shap_arr,
+    base_values=np.full(len(X_shap), base_val),
+    data=X_shap.values,
+    feature_names=feature_cols,
+)
 
 # Human-readable feature names
 feature_labels = {
@@ -225,8 +241,8 @@ plot_shap = pd.concat([non_state, state_only]).sort_values(ascending=True)
 fig, ax = plt.subplots(figsize=(10, 7))
 plot_shap.plot(kind="barh", ax=ax, color="#4C72B0")
 ax.set_xlabel("Mean |SHAP value| (impact on on-track probability)")
-ax.set_title("Feature Importance (SHAP) — ECD Proxy Composite\n"
-             "India NFHS-5, HistGradientBoosting, n=500 subsample", fontweight="bold")
+ax.set_title(f"Feature Importance (SHAP) — ECD Proxy Composite\n"
+             f"India NFHS-5, HistGradientBoosting, n={len(X_shap):,} (full dataset)", fontweight="bold")
 plt.tight_layout()
 fig.savefig(OUT / "09_shap_bar.png", dpi=150)
 plt.close()

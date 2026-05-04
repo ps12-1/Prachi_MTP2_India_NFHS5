@@ -1,0 +1,7 @@
+feature,VIF
+child_age_months,1.02
+is_female,1.0
+is_urban,1.2
+wealth_index,1.5
+mother_edu,1.32
+mother_age,1.05

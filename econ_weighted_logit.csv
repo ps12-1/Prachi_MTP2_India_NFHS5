@@ -1,0 +1,8 @@
+,coef_unweighted,coef_weighted,se_weighted,z_weighted,p_weighted
+const,19.872,17.34,,,
+child_age_months,-0.014,-0.018,0.002,-10.25,0.0
+is_female,0.026,-0.013,0.035,-0.36,0.7193
+is_urban,0.469,0.559,0.054,10.29,0.0
+wealth_index,1.03,1.126,0.02,55.95,0.0
+mother_edu,0.879,0.919,0.019,48.32,0.0
+mother_age,0.069,0.078,0.004,17.92,0.0

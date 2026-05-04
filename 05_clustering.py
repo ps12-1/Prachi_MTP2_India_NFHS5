@@ -53,11 +53,10 @@ X_raw = df_c[cluster_features].values
 scaler = StandardScaler()
 X = scaler.fit_transform(X_raw)
 
-# Subsample for k-selection (silhouette_score is O(n²) — too slow on full dataset)
-SAMPLE_N = 10_000
-rng = np.random.default_rng(42)
-sample_idx = rng.choice(len(X), size=min(SAMPLE_N, len(X)), replace=False)
-X_sample = X[sample_idx]
+# Full dataset for silhouette — sklearn uses chunked pairwise distances so
+# memory stays bounded; runtime is O(n²) but feasible for ~86k rows.
+print(f"Running silhouette on full dataset ({len(X):,} rows) …")
+X_sample = X
 
 # ── 1. Elbow method + Silhouette scores ───────────────────────────────────────
 
@@ -84,7 +83,7 @@ ax2.set_ylabel("Silhouette Score")
 ax2.set_title("Silhouette Score", fontweight="bold")
 ax2.legend()
 
-plt.suptitle("Optimal Number of Clusters — NFHS-5 ECD Proxy Domains", fontweight="bold", y=1.02)
+plt.suptitle(f"Optimal Number of Clusters — NFHS-5 ECD Proxy Domains (n={len(X):,})", fontweight="bold", y=1.02)
 plt.tight_layout()
 fig.savefig(OUT / "11_cluster_selection.png", dpi=150, bbox_inches="tight")
 plt.close()
